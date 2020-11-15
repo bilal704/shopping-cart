@@ -3,12 +3,21 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     
 class Cart extends CI_Controller{
 
+    /**
+     * 
+     * Method to display the cart items.
+     * Have used codeigniter's native cart class and its method
+     */
     public function index($data = []){
         
         $this->load->helper('form');
         $this->load->view('user-cart', $data);
     }
 
+    /**
+     * 
+     * Method to add a product to the cart
+     */
     public function addToCart(){
         
         $data = $this->input->post('data');     
@@ -26,6 +35,10 @@ class Cart extends CI_Controller{
         echo json_encode($response);
     }
 
+     /**
+     * 
+     * Method to update the cart items.
+     */
     public function updateCart(){
 
         $post_data = $this->input->post();
@@ -51,6 +64,10 @@ class Cart extends CI_Controller{
         $this->index($data);
     }
 
+     /**
+     * 
+     * Method to update a prefilled form for registered user.
+     */
     public function finalCheckout(){
 
         if(isset($_SESSION['user'])){
@@ -81,18 +98,45 @@ class Cart extends CI_Controller{
         }
     }
 
+    /**
+     * 
+     * Method to save the order in the tbl_orders table.
+     * It is used for both guest user and logeed in user.
+     * 
+     * For guest user 'guest_user' field will be updated as 1 and user_id
+     * will be saved as 0.
+     * 
+     * For logged in user user_id will be store the user id and
+     * guest_user field will contain 0
+     */
+
     public function saveOrder(){
 
-        if(isset($_SESSION['user']) && !empty($this->cart->contents())){
+        if(!empty($this->cart->contents())){
 
             $order_details = [];
+            $user_id = $guest_user_id = 0;
             
-            $order_details['email'] = $this->sanitize($this->input->post('new-user-email'));
-            $order_details['name'] = $this->sanitize($this->input->post('new-user-name'));
-            $order_details['address'] = $this->sanitize($this->input->post('new-user-address'));
-            $order_details['city'] = $this->sanitize($this->input->post('new-user-city'));
-            $order_details['pin_code'] = $this->sanitize($this->input->post('new-user-pin-code'));
-            $order_details['phone'] = $this->sanitize($this->input->post('new-user-phone'));
+            if(isset($_SESSION['user'])){
+
+                $order_details['email'] = $this->sanitize($this->input->post('new-user-email'));
+                $order_details['name'] = $this->sanitize($this->input->post('new-user-name'));
+                $order_details['address'] = $this->sanitize($this->input->post('new-user-address'));
+                $order_details['city'] = $this->sanitize($this->input->post('new-user-city'));
+                $order_details['pin_code'] = $this->sanitize($this->input->post('new-user-pin-code'));
+                $order_details['phone'] = $this->sanitize($this->input->post('new-user-phone'));
+                $user_id = $_SESSION['user'];
+            }
+            else{
+
+                $order_details['email'] = $this->sanitize($this->input->post('guest-user-email'));
+                $order_details['name'] = $this->sanitize($this->input->post('guest-user-name'));
+                $order_details['address'] = $this->sanitize($this->input->post('guest-user-address'));
+                $order_details['city'] = $this->sanitize($this->input->post('guest-user-city'));
+                $order_details['pin_code'] = $this->sanitize($this->input->post('guest-user-pin-code'));
+                $order_details['phone'] = $this->sanitize($this->input->post('guest-user-phone'));
+                $guest_user_id = 1;
+            }
             
             $cart_items = $this->cart->contents();
             $product_data = [];
@@ -103,7 +147,8 @@ class Cart extends CI_Controller{
             }
 
             $arr = [
-                'user_id' => $_SESSION['user'],
+                'user_id' => $user_id,
+                'guest_user' => $guest_user_id,
                 'product_ids' => json_encode($product_data),
                 'order_total' => $this->cart->total(),
                 'order_details' => json_encode($order_details),
@@ -111,9 +156,9 @@ class Cart extends CI_Controller{
             ];
             
             if($this->db->insert('tbl_orders', $arr)){
-
-                $this->cart->destroy();
+                
                 $data = $this->load->view('invoice', $order_details, true);
+                $this->cart->destroy();
                 $this->output->set_output($data); 
             }
         }
@@ -123,6 +168,10 @@ class Cart extends CI_Controller{
         }
     }
 
+    /**
+     * 
+     * function to load the checkout view
+     */
     public function checkout(){
 
         $this->load->view('checkout');

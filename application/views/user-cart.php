@@ -89,7 +89,7 @@
         <?php } else{
 
             ?>
-            <center><h2>Your Cart Is Empty</h2></center>
+            <center><h2 style="margin-top: 75px;">Your Cart Is Empty</h2></center>
             <?php
         } ?>
         <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>

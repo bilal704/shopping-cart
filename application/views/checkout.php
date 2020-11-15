@@ -30,7 +30,7 @@
                 $onclick = 'registerUser';
                 $action = base_url().'user/register';
             ?>
-            <h1>New User, Please Register</h1>
+            <h1>New User, Please Register Or <a href="<?php echo base_url().'user/guest'; ?>">Checkout As Guest</a></h1>
             <?php
             }
             else{
@@ -87,44 +87,7 @@
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>
         </div>
-
-        <?php 
-        if(!isset($_SESSION['user'])){
-        ?>
-        <div class="container col-xs-12 col-md-12">
-            <h1>Guest Checkout</h1>
-            <form onsubmit="javascript:guestUser(this);return false;" method="post" action="<?php echo base_url();?>user/guestCheckout">
-                <div class="form-group">
-                    <label for="exampleInputEmail1">Email address</label>
-                    <input type="email" class="form-control" id="new-user-email" aria-describedby="emailHelp" placeholder="Enter email">
-                    <small id="new-user-email-help" class="form-text text-muted">We'll never share your email with anyone else.</small>
-                </div>
-                <div class="form-group">
-                    <label for="exampleInputPassword1">Name</label>
-                    <input type="text" class="form-control" id="new-user-name" placeholder="Name">
-                </div>
-                <div class="form-group">
-                    <label for="exampleInputPassword1">Address</label>
-                    <textarea class="form-control" id="new-user-address" placeholder="Address"></textarea>
-                </div>
-                <div class="form-group">
-                    <label for="exampleInputPassword1">City</label>
-                    <input type="text" class="form-control" id="new-user-city" placeholder="City">
-                </div>
-                <div class="form-group">
-                    <label for="exampleInputPassword1">Pin Code</label>
-                    <input type="text" class="form-control" id="new-user-pin-code" placeholder="Pin Code">
-                </div>
-                <div class="form-group">
-                    <label for="exampleInputPassword1">Mobile</label>
-                    <input type="phone" class="form-control" id="new-user-pin-code" placeholder="Pin Code">
-                </div>
-                <button type="submit" class="btn btn-primary">Submit</button>
-            </form>
-        </div>
-        <?php
-        }
-        ?>
+        
         <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
         <script type="text/javascript">

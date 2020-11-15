@@ -3,6 +3,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     
 class User extends CI_Controller{
 
+    /**
+     * 
+     * Method to register a new user
+     */
     public function register(){
 
         $email = $this->sanitize($this->input->post('new-user-email'));
@@ -77,10 +81,19 @@ class User extends CI_Controller{
         echo json_encode($response);exit;
     }
 
+    /**
+     * 
+     * Method to show the login view
+     */
     public function login(){
 
         $this->load->view('login');
     }
+
+    /**
+     * 
+     * Method to logout the user and empty the cart
+     */
 
     public function logout(){
 
@@ -89,6 +102,10 @@ class User extends CI_Controller{
         header('Location: '. base_url());
     }
 
+    /**
+     * 
+     * Method to authenticate the user
+     */
     public function checklogin(){
         
         $email = $this->sanitize($this->input->post('login-email'));
@@ -118,6 +135,26 @@ class User extends CI_Controller{
         }
     }
 
+    /**
+     * 
+     * Method to display the guest checkout form
+     */
+    public function guest(){
+
+        if(!isset($_SESSION['user']) && !empty($this->cart->contents())){
+            
+            $this->load->view('guest-user.php');
+        }
+        else{
+
+            header('Location: '.base_url());
+        }
+    }
+
+    /**
+     * 
+     * Method to sanitize user input
+     */
     private function sanitize($input){
 
         return htmlspecialchars(stripslashes(trim($input)));
