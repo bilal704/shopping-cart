@@ -84,7 +84,7 @@
 
             </table>
 
-            <p><?php echo form_submit('', 'Update your Cart', "class='addMargin btn btn-success'"); ?>  <?php echo form_button('', 'Checkout', "class='addMargin btn btn-primary'"); ?></p>
+            <p><?php echo form_submit('', 'Update your Cart', "class='addMargin btn btn-success'"); ?>  <?php echo form_button('', 'Checkout', "class='addMargin checkout btn btn-primary'"); ?></p>
 
         <?php } else{
 
@@ -96,6 +96,21 @@
         <script type="text/javascript">
             $('.nav.navbar-nav li').removeClass('active');
             $('#cart').addClass('active');
+            <?php
+
+                if(!isset($_SESSION['user'])){
+
+                    $url = base_url().'cart/checkout';
+                }
+                else{
+
+                    $url = base_url().'cart/finalCheckout';
+                }
+            ?>
+            $('.checkout').on('click', function(){
+
+                window.location.href = "<?php echo $url; ?>";
+            });
         </script>
     </body>
 </html>

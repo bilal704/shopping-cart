@@ -15,12 +15,29 @@
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
         <li id="home"><a href="<?php echo base_url();?>">Home</a></li>
-        <li id="register"><a href="<?php echo base_url();?>register">Register</a></li>
+        <li id="register"><a href="<?php echo base_url();?>cart/checkout">Register</a></li>
         <li id="cart"><a href="<?php echo base_url();?>cart">Cart</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
+        <?php
+        if(isset($_SESSION['user'])){
+        ?>
+        <li>
+          <a href="<?php echo base_url();?>user/logout">Logout</a>
+        </li>
+        <?php
+        }
+        else{
+
+          ?>
+          <li>
+            <a href="<?php echo base_url();?>user/login">Login</a>
+          </li>
+          <?php
+        }
+        ?>
         <li class="dropdown">
-            <a href="<?php echo base_url();?>/cart" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+            <a href="<?php echo base_url();?>cart" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                 <span class="glyphicon glyphicon-shopping-cart"></span>
                 <span id="cart-count">
                     <?php

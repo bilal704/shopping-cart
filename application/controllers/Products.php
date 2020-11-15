@@ -15,5 +15,10 @@ class Products extends CI_Controller{
         $data['product_info'] = $this->products_model->getProduct($product_id);
         $this->load->view('single-product', $data);      
     }
+
+    public function insertProducts(){
+        exit;
+        $this->products_model->insertProducts();
+    }
 }
 ?>

@@ -29,7 +29,7 @@
                     <div class="row">
                             <div class="col-md-5 col-sm-12 col-xs-12">
                                 <div class="product-image"> 
-                                    <img src="<?php echo $product_info['image']; ?>" class="img-responsive"> 
+                                    <img src="<?php echo $product_info[0]['image']; ?>" class="img-responsive"> 
                                     <span class="<?php echo $class; ?>">
                                         <?php echo strtoupper($hot_sale_text); ?>
                                     </span> 
@@ -39,24 +39,24 @@
                             <div class="product-deatil">
                                     <h5 class="name">
                                         <a href="#">
-                                            <?php echo $product_info['title']; ?>
+                                            <?php echo $product_info[0]['title']; ?>
                                         </a>
                                         <a href="#">
-                                            <span><?php echo $product_info['category']; ?></span>
+                                            <span><?php echo $product_info[0]['category']; ?></span>
                                         </a> 
                                     </h5>
                                     <p class="price-container">
-                                        <span><?php echo "$".$product_info['price']; ?></span>
+                                        <span><?php echo "$".$product_info[0]['price']; ?></span>
                                     </p>
                                     <span class="tag1"></span> 
                             </div>
                             <div class="description">
-                                <p><?php echo $product_info['description'] ?></p>
+                                <p><?php echo $product_info[0]['description'] ?></p>
                             </div>
                             <div class="product-info smart-form">
                                 <div class="row">
                                     <div class="col-md-12"> 
-                                        <a href="javascript:void(0);" class="btn btn-danger" onclick="javacsript:addToCart(<?php echo $product_info['id']; ?>, 1, <?php echo $product_info['price']; ?>, '<?php echo addslashes(substr($product_info['title'], 0, 30)); ?>...')">Add to cart</a>
+                                        <a href="javascript:void(0);" class="btn btn-danger" onclick="javacsript:addToCart(<?php echo $product_info[0]['id']; ?>, 1, <?php echo $product_info[0]['price']; ?>, '<?php echo addslashes(substr($product_info[0]['title'], 0, 30)); ?>...')">Add to cart</a>
                                         <a href="<?php echo base_url();?>" class="btn btn-info">Back To Shop</a>
                                     </div>
                                 </div>
